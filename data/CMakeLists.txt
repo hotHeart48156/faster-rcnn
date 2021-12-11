@@ -1,0 +1,5 @@
+project(cov_dataset)
+cmake_minimum_required(VERSION 3.16)
+set(DEPENDS  expat Torch OpenCV TorchVision )
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../builder)
+include(library)

@@ -1,0 +1,18 @@
+#include<torch/torch.h>
+class dataset
+{
+private:
+    /* data */
+    
+public:
+    dataset(/* args */);
+    ~dataset();
+};
+
+dataset::dataset(/* args */)
+{
+}
+
+dataset::~dataset()
+{
+}
