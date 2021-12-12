@@ -2,10 +2,11 @@
 #include<torch/torch.h>
 #include<torchvision/models/alexnet.h>
 #include<expat.h>
-// #include<cov>
+#include<dataset.h>
 int main(int argc, char const *argv[])
 {
-    std::cout<<"hello";
+    torch::Tensor tensor=torch::rand({4,6});
+    std::cout<<tensor;
     return 0;
     
 
