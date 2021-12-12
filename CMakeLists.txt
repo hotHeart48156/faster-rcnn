@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(faster-rcnn)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/builder)
-set(DEPENDS  expat cov_dataset OpenCV  TorchVision )
+set(DEPENDS Torch  expat cov_dataset OpenCV  TorchVision )
 # include(have_child_project)
 include(executable)
