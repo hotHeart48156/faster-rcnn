@@ -5,6 +5,7 @@ enum Mode
     Train,
     Test
 };
+namespace {
 struct CovDataset : torch::data::Dataset<CovDataset>
 {
 private:
@@ -21,3 +22,4 @@ public:
     const torch::Tensor $targets() const;
 };
 
+};
