@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.16)
-set(CMAKE_CXX_STANDARD 14)
 #添加源文件和头文件
 file(GLOB INCLUDE_FILE_h include/*.h)
 file(GLOB SRC_FILE_CPP src/*.cpp)
