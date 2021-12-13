@@ -9,9 +9,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(OSS_PREFIX_LIB_PATH ${OSS_PREFIX_PATH}/lib)
 set(OSS_PREFIX_INC_PATH ${OSS_PREFIX_PATH}/include)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/Modules ${CMAKE_MODULE_PATH})
-message("aaaccc${DEPENDS}")
+message(STATUS "${PROJECT_NAME} CONTAIN DEPENDS ${DEPENDS}")
 if(DEFINED DEPENDS)
-    message("defined")
     list(LENGTH DEPENDS _DEPENDS_LEN)#list判断长度有时不需要加${}
     #message("DEPENDS_LEN${_DEPENDS_LEN}")#如果一个值可以为空要加冒号
     if( "${_DEPENDS_LEN}" GREATER 0)#判断变量是否定义不需要加$

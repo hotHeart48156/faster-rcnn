@@ -32,9 +32,11 @@ endif()
 endforeach()
 list(LENGTH SUB_PROJECTS SUB_PROJECTS_LEN)
 if(${SUB_PROJECTS_LEN} GREATER 0)
-    message("add subproject${SUB_PROJECTS}")
-	add_subdirectory(${SUB_PROJECTS})
     
+	foreach(SUB_PROJECT IN ITEMS ${SUB_PROJECTS})
+	message(STATUS "ADD SUB PROJECT ${SUB_PROJECT}")
+	add_subdirectory(${SUB_PROJECT})
+	endforeach()
 endif()
 
 
