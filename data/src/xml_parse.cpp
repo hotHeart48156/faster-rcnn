@@ -28,6 +28,7 @@ namespace
             XML_Parse(parser,data,strlen(data),XML_TRUE);
             size_t len=fread(&data, sizeof(char), 1024, xml_file);
         }
+        XML_ParserFree(parser);
         
     }
 }

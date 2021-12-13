@@ -13,7 +13,6 @@
 #include <torch/types.h>
 #include <filesystem>
 #include <iostream>
-// #include<fil>
 namespace fs = std::filesystem;
 namespace
 {

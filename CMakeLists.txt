@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(faster-rcnn)
+
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/builder)
-set(DEPENDS Torch network  expat   OpenCV  TorchVision )
+set(DEPENDS Torch network  rapidxml   OpenCV  TorchVision )
 include(executable)
+
