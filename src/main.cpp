@@ -5,10 +5,11 @@
 #include <map>
 #include <string>
 #include<any>
+// #include<experimental/any>
 void read(rapidxml::xml_node<char> *node)
 {
-    // std::map<std::string, std:> result;
-    // result.insert("aacc","aacc");
+    std::map<char*, std::string> result;
+    result.insert("aacc","aacc");
     for (; node != NULL;)
     {
         if (node->first_node() != nullptr)

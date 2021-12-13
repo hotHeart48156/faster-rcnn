@@ -10,6 +10,8 @@ PRIVATE
 ${INCLUDE_FILE_H}
 ${SRC_FILE_CPP}
 )
+# set_property(TARGET  tgt PROPERTY CXX_STANDARD 20)
+
 include(${CMAKE_CURRENT_LIST_DIR}/common.cmake)
  
 
