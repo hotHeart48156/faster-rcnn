@@ -45,6 +45,7 @@ namespace
 				cv::Mat img = cv::imread(p.path());
 				auto img_tensor = CVtoTensor(img);
 				// targets[i]=torch::tensor(targets,torch::kFloat64);
+				// fopen
 			}
 		}
 		return {images, targets};

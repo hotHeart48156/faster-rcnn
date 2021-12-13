@@ -15,6 +15,5 @@ if(DEFINED DEPENDS)
     #message("DEPENDS_LEN${_DEPENDS_LEN}")#如果一个值可以为空要加冒号
     if( "${_DEPENDS_LEN}" GREATER 0)#判断变量是否定义不需要加$
         include(${CMAKE_CURRENT_LIST_DIR}/depends.cmake)
-        # message("add depends" ${DEPENDS})
     endif()
 endif()
