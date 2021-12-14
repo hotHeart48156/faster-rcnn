@@ -1,34 +1,37 @@
 #include "xml_parse.h"
 #include <expat.h>
 #include <iostream>
-#include<cstring>
+#include <cstring>
 namespace
 {
-  
-    void start(void *data, const XML_Char *el, const XML_Char **attr)
+    static void XMLCALL
+    startElememt(void *data, const XML_Char *element, const XML_Char **attrs)
     {
+        
     }
-    void end(void *data, const XML_Char *el) {}
+    static void XMLCALL
+    endElement(void *data, const XML_Char *element) {}
     void value(void *data, const char *name, int len) {}
-    XmlParse::XmlParse(const char *path)
+    XmlParse::XmlParse()
     {
-        path = path;
+        XmlParse::parser = XML_ParserCreate(NULL);
+        XML_SetElementHandler(parser, startElememt, endElement);
+        XML_SetCharacterDataHandler(parser, value);
     }
-    void XmlParse::parse()
+    void XmlParse::parse(const char *path)
     {
 
-        XML_Parser parser = XML_ParserCreate(NULL);
-        XML_SetElementHandler(parser, start, end);
-        XML_SetCharacterDataHandler(parser, value);
         char data[1024] = {};
-        FILE *xml_file = fopen(XmlParse::path, "r");
-        size_t len=fread(&data, sizeof(char), 1024, xml_file);
-        while (data!=NULL&&len>0)
+        FILE *xml_file = fopen(path, "r");
+        size_t len = fread(&data, sizeof(char), 1024, xml_file);
+        while (data != NULL && len > 0)
         {
-            XML_Parse(parser,data,strlen(data),XML_TRUE);
-            size_t len=fread(&data, sizeof(char), 1024, xml_file);
+            XML_Parse(parser, data, strlen(data), XML_TRUE);
+            size_t len = fread(&data, sizeof(char), 1024, xml_file);
         }
-        XML_ParserFree(parser);
-        
+    }
+    XmlParse::~XmlParse()
+    {
+        XML_ParserFree(XmlParse::parser);
     }
 }
