@@ -1,9 +1,4 @@
-#pragma once
-#include <expat.h>
-#include <string>
-// #pragma execution_character_set("utf-8")
-// namespace
-// {
+#include<string>
 struct Object
 {
     std::string name;
@@ -33,17 +28,3 @@ struct Annotation
     int segmented;
     Size size;
 };
-static Annotation annotation;
-
-class XmlParse
-{
-private:
-    XML_Parser parser=XML_ParserCreate("UTF-8");;
-
-public:
-    XmlParse();
-    ~XmlParse();
-    void parse(const char *path);
-};
-
-// }
