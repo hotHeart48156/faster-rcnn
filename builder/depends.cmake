@@ -72,6 +72,7 @@ foreach(dep IN ITEMS ${DEPENDS})
     continue()
 endforeach()
 include_directories(${SUB_PROJECTS_DIR_DEPENDS})
+message("cccvvvcscs${PROJECT_NAME}   ${FOUND_DEPENDS}")
 target_link_libraries(${PROJECT_NAME}   ${FOUND_DEPENDS})
 unset(DEPENDS)
 

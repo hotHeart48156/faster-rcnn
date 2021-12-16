@@ -1,6 +1,7 @@
 #pragma once
 #include <expat.h>
 #include <string>
+#include<vector>
 // #pragma execution_character_set("utf-8")
 // namespace
 // {
@@ -29,7 +30,7 @@ struct Annotation
     std::string occluded;
     std::string pose;
     int diffcult;
-    Object object;
+    std::vector<Object> objects;
     int segmented;
     Size size;
 };
