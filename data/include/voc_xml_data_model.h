@@ -1,10 +1,11 @@
+#pragma once
 #include <string>
 #include <iostream>
 #include <vector>
 #include <rttr/registration>
-#include<rttr/detail/conversion/std_conversion_functions.h>
-#include<rttr/detail/conversion/number_conversion.h>
-#include<rttr/detail/variant/variant_data_policy.h>
+// #include <rttr/detail/conversion/std_conversion_functions.h>
+// #include <rttr/detail/conversion/number_conversion.h>
+// #include <rttr/detail/variant/variant_data_policy.h> //rttr 不能垮项目引用。
 using namespace std;
 using namespace rttr;
 struct Object
@@ -37,39 +38,34 @@ struct Annotation
     Size size;
 };
 
-RTTR_REGISTRATION{
+
+RTTR_REGISTRATION
+{
+    registration::class_<Object>("Object")
+        .constructor<>()
+        .property("filename", &Object::name)
+        .property("folder", &Object::xmax)
+        .property("occluded", &Object::xmin)
+        .property("pose", &Object::ymax)
+        .property("objects", &Object::ymin)
+        .property("diffcult", &Object::diffcult);
+    registration::class_<Size>("Size")
+        .constructor<>()
+        .property("depth", &Size::depth)
+        .property("width", &Size::width)
+        .property("height", &Size::height);
+
     registration::class_<Annotation>("Annotation")
         .constructor<>()
         .property("filename", &Annotation::filename)
         .property("folder", &Annotation::folder)
         .property("occluded", &Annotation::occluded)
-        // .property("size", &Annotation::size)
-        // .property("objects", &Annotation::objects)
+        .property("size", &Annotation::size)
+        .property("objects", &Annotation::objects)
         .property("segmented", &Annotation::segmented)
         .property("occluded", &Annotation::occluded)
         .property("pose", &Annotation::pose);
-
 }
-
-// RTTR_REGISTRATION{
-//     registration::class_<Object>("Object")
-//         .constructor<>()
-//         .property("filename", &Object::name)
-//         .property("folder", &Object::xmax)
-//         .property("occluded", &Object::xmin)
-//         .property("pose", &Object::ymax)
-//         .property("objects", &Object::ymin)
-//         .property("diffcult", &Object::diffcult);
-
-// } 
-// RTTR_REGISTRATION{
-//     registration::class_<Size>("Size")
-//         .constructor<>()
-//         .property("depth", &Size::depth)
-//         .property("width", &Size::width)
-//         .property("height", &Size::height);
-
-// }
 
 std::ostream &
 operator<<(std::ostream &os, const Annotation &annotation)
