@@ -1,4 +1,3 @@
-include(${CMAKE_TOOLCHAIN_FILE})
 # list(APPEND FOUND_DEPENDS ${dep})
 # add_library(rapidxml INTERFACE)
 find_path(RAPIDXML_INCLUDE_DIRS "rapidxml/rapidxml.hpp")

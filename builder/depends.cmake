@@ -9,6 +9,7 @@ set(CMAKE_TOOLCHAIN_FILE  /home/ubuntu/program/vcpkg/scripts/buildsystems/vcpkg.
 find_package(PkgConfig)
 set(FOUND_DEPENDS)
 set(SUB_PROJECTS_DIR_DEPENDS)
+include(${CMAKE_TOOLCHAIN_FILE})
 foreach(dep IN ITEMS ${DEPENDS})
 
     #查找当前builder目录
@@ -65,15 +66,14 @@ foreach(dep IN ITEMS ${DEPENDS})
     
     #查找vcpkg目录，不用条件判断，最后选择
     message(STATUS  "FOUND DEPENDS ${dep} IN VCPKG")
-    include(${CMAKE_TOOLCHAIN_FILE})
+    # include(${CMAKE_TOOLCHAIN_FILE})
     find_package(${dep} CONFIG REQUIRED)
     set(VCPKG_DEPEND "${dep}::${dep}")
     list(APPEND FOUND_DEPENDS ${VCPKG_DEPEND})
     continue()
 endforeach()
 include_directories(${SUB_PROJECTS_DIR_DEPENDS})
-message("cccvvvcscs${PROJECT_NAME}   ${FOUND_DEPENDS}")
-target_link_libraries(${PROJECT_NAME}   ${FOUND_DEPENDS})
+target_link_libraries(${PROJECT_NAME} PRIVATE    ${FOUND_DEPENDS})
 unset(DEPENDS)
 
 

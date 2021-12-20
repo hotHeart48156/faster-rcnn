@@ -4,8 +4,10 @@ set(CMAKE_PLUGIN_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/out/plugins)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unused-function -Wunused-variable -Wunused-result -std=c++2a -O3 -fPIC")
-set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -Wno-unused-function -O3 -fPIC" )
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unused-function  -Wunused-variable -Wunused-result -std=c++2a -O3 -fPIC")
+set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -Wno-unused-function -O3 -fPIC " )
+# add_definitions(-D RTTR_DLL)
+# add_definitions(-Drefl-cpp_DEVELOPER_MODE=ON)
 #开源代码的库路径和头文件路径
 set(OSS_PREFIX_LIB_PATH ${OSS_PREFIX_PATH}/lib)
 set(OSS_PREFIX_INC_PATH ${OSS_PREFIX_PATH}/include)
