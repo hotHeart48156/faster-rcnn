@@ -1,6 +1,8 @@
 #include "refl.hpp"
 #include <cassert>
 #include <iostream>
+#include<python3.8/Python.h>
+// #incl>
 // refl-cpp proxies intecept calls to T's members
 // and statically determine the member descriptor and
 // type of the user-provided handler.
@@ -69,7 +71,7 @@ int main()
 {
     for_each(refl::reflect<User>().members
     ,[&](auto member)
-    {std::cout<<get_display_name(member);member(value)="hello";}
+    {std::cout<<get_display_name(member);}
     );
     // User-defined builder-style factories for any reflectable type! 🔥
     const User user = builder<User>(10)
