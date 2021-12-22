@@ -1,85 +1,72 @@
-#include "refl.hpp"
-#include <cassert>
+
+#include <daw/daw_read_file.h>
+#include <daw/json/daw_json_link.h>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
 #include <iostream>
-#include<python3.8/Python.h>
-// #incl>
-// refl-cpp proxies intecept calls to T's members
-// and statically determine the member descriptor and
-// type of the user-provided handler.
+#include <string>
 
-// An example of a generic user-defined builder-style factory
-template <typename T>
-class builder : public refl::runtime::proxy<builder<T>, T>
+namespace daw::cookbook_class1 {
+	struct MyClass1 {
+		std::string member_0;
+		int member_1;
+		bool member_2;
+	};
+
+	bool operator==( MyClass1 const &lhs, MyClass1 const &rhs ) {
+		return std::tie( lhs.member_0, lhs.member_1, lhs.member_2 ) ==
+		       std::tie( rhs.member_0, rhs.member_1, rhs.member_2 );
+	}
+} // namespace daw::cookbook_class1
+
+namespace daw::json {
+	template<>
+	struct json_data_contract<daw::cookbook_class1::MyClass1> {
+#if defined( __cpp_nontype_template_parameter_class )
+		using type =
+		  json_member_list<json_string<"member0">, json_number<"member1", int>,
+		                   json_bool<"member2">>;
+#else
+		static constexpr char const member0[] = "member0";
+		static constexpr char const member1[] = "member1";
+		static constexpr char const member2[] = "member2";
+		using type =
+		  json_member_list<json_string<member0>, json_number<member1, int>,
+		                   json_bool<member2>>;
+#endif
+		static inline auto
+		to_json_data( daw::cookbook_class1::MyClass1 const &value ) {
+			return std::forward_as_tuple( value.member_0, value.member_1,
+			                              value.member_2 );
+		}
+	};
+} // namespace daw::json
+
+int main( int argc, char **argv )
+#ifdef DAW_USE_JSON_EXCEPTIONS
+  try
+#endif
 {
-public:
-    template <typename... Args>
-    builder(Args &&...args)
-        : value_(std::forward<Args>(args)...)
-    {
-    }
+	if( argc <= 1 ) {
+		puts( "Must supply path to cookbook_class1.json file\n" );
+		exit( EXIT_FAILURE );
+	}
+	auto data = *daw::read_file( argv[1] );
 
-    // Intercepts calls to T's members with
-    // a mutable *this and a single argument
-    template <typename Member, typename Value>
-    static builder &invoke_impl(builder &self, Value &&value)
-    {
-        // Create instance of statically-determined member
-        // descriptor to use helpers with ADL-lookup
-        constexpr Member member;
-        // Statically verify that the target member is writable
-        static_assert(is_writable(member));
-        // Set the value of the target field
-        member(self.value_) = std::forward<Value>(value);
-        // Return reference to builder
-        return self;
-    }
+	auto const cls = daw::json::from_json<daw::cookbook_class1::MyClass1>(
+	  std::string_view( data.data( ), data.size( ) ) );
 
-    T build()
-    {
-        return std::move(value_);
-    }
+	std::string const str = daw::json::to_json( cls );
+	puts( str.c_str( ) );
 
-private:
-    T value_; // Backing object
-};
+	auto const cls2 = daw::json::from_json<daw::cookbook_class1::MyClass1>(
+	  std::string_view( str.data( ), str.size( ) ) );
 
-struct User
-{
-    const long id;
-    std::string email;
-    std::string first_name;
-    std::string last_name;
-
-    User(long id)
-        : id{id}, email{}, first_name{}, last_name{}
-    {
-    }
-};
-
-REFL_AUTO(
-    type(User),
-    field(id),
-    field(email),
-    field(first_name),
-    field(last_name))
-
-// Metadata available at compile-time (erased at runtime)
-// -> zero-cost introspection in C++17🔥
-static_assert(refl::reflect<User>().members.size == 4);
-
-int main()
-{
-    for_each(refl::reflect<User>().members
-    ,[&](auto member)
-    {std::cout<<get_display_name(member);}
-    );
-    // User-defined builder-style factories for any reflectable type! 🔥
-    const User user = builder<User>(10)
-                          // .id(42) <- Fails at compile-time (is_writable == false)
-                          .email("jdoe@example.com")
-                          .first_name("John")
-                          .last_name("Doe")
-                          .build();
-    assert(user.email == "jdoe@example.com");
-    std::cout << user.email;
 }
+#ifdef DAW_USE_JSON_EXCEPTIONS
+catch( daw::json::json_exception const &jex ) {
+	std::cerr << "Exception thrown by parser: " << jex.reason( ) << std::endl;
+	exit( 1 );
+}
+#endif

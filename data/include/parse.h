@@ -9,7 +9,7 @@
     public:
         Parse(/* args */);
         ~Parse();
-        void parse(std::string path);
+        Annotation parse(std::string path);
     };
 
 // }
