@@ -2,21 +2,6 @@
 #include <parse.h>
 #include <iostream>
 
-// struct test
-// {
-//     int a, b, c, d;
-//     RTTR_ENABLE()
-// };
-// RTTR_REGISTRATION
-// {
-//     rttr::registration::class_<test>("test")
-//         .constructor<>()
-//         .property("a", &test::a)
-//         .property("b", &test::b)
-//         .property("c", &test::c)
-//         .property("d", &test::d);
-// }
-
 int main(int argc, char const *argv[])
 {
     
