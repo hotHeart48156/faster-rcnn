@@ -128,8 +128,6 @@ Object parse_object(std::pair<rapidxml::xml_node<> *, NodeType> node, rttr::type
     object.get_property(node.first->name()).set_value(object_ins, std::string(node.first->value()));
 
     object_ins.bndbox = bndbox_ins;
-    std::cout << "bndbox" << bndbox_ins.xmax << " " << bndbox_ins.xmin << " " << bndbox_ins.ymax << " " << bndbox_ins.ymin;
-    // annotation.get_method("insert_object").invoke(annotation.create(), object_ins);
     return object_ins;
 }
 ImgSize parse_size(std::pair<rapidxml::xml_node<> *, NodeType> node, rttr::type annotation)
