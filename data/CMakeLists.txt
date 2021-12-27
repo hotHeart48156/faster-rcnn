@@ -1,5 +1,5 @@
 project(voc_dataset)
 cmake_minimum_required(VERSION 3.16)
-set(DEPENDS Torch OpenCV TorchVision rapidxml DawJsonLink  refl-cpp  )
+set(DEPENDS Torch OpenCV TorchVision rapidxml DawJsonLink  rttr  )
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../builder)
 include(library)

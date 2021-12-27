@@ -7,6 +7,6 @@ set (CMAKE_CXX_COMPILER  "/usr/bin/clang++-12" CACHE STRING "C++ compiler" FORCE
 project(faster-rcnn)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/builder)
-set(DEPENDS Python Torch  network    expat  voc_dataset)
+set(DEPENDS Python Torch  network  rttr   expat  voc_dataset)
 include(executable)
 

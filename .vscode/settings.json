@@ -76,7 +76,8 @@
         "locale": "cpp",
         "queue": "cpp",
         "cstdbool": "cpp",
-        "cfenv": "cpp"
+        "cfenv": "cpp",
+        "type": "cpp"
     },
     "git.ignoreLimitWarning": true
 }
