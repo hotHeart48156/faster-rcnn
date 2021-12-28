@@ -14,7 +14,7 @@ public:
     rttr::type annotation=rttr::type::get_by_name("Annotation");
     Parse(/* args */);
     ~Parse();
-    std::optional<Annotation> parse(std::string path);
+    Annotation parse(std::string path);
 };
 // int parse(std::string path){
 //     rapidxml::file<> file(path.c_str());

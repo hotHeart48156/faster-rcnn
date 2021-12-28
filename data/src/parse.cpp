@@ -144,7 +144,7 @@ ImgSize parse_size(std::pair<rapidxml::xml_node<> *, NodeType> node, rttr::type 
     // annotation.get_method("set_size").invoke(annotation.create(), img_size);
     return img_size;
 }
-std::optional<Annotation> Parse::parse(std::string path)
+Annotation Parse::parse(std::string path)
 {
     rapidxml::file<> file(path.c_str());
     rapidxml::xml_document<> doc;
@@ -183,5 +183,4 @@ std::optional<Annotation> Parse::parse(std::string path)
         }
     }
     return annotation_instance;
-    // return cc.convert<rttr::type::get_by_name("Annotation")>();
 }
