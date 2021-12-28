@@ -30,7 +30,7 @@ foreach(dep IN ITEMS ${DEPENDS})
     endif()
 
     #查找子项目
-    file(GLOB_RECURSE CMAKES RELATIVE ${PROJECT_SOURCE_DIR}/ ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt)
+    file(GLOB_RECURSE CMAKES RELATIVE ${CMAKE_SOURCE_DIR}/ ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt)
     message("CMAKES ${CMAKES}")
     set(FOUND)
     foreach(CMAKE IN ITEMS ${CMAKES})

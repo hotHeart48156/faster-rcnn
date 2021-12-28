@@ -1,5 +1,6 @@
 project(network)
 cmake_minimum_required(VERSION 3.16)
-set(DEPENDS  expat Torch OpenCV TorchVision )
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../builder)
+set(DEPENDS   Torch OpenCV TorchVision )
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/builder)
+message("CMAKE_SOURCE_DIR${CMAKE_SOURCE_DIR}")
 include(library)

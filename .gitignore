@@ -1,2 +1,4 @@
 build
 VOCdevkit
+test.txt
+train.txt

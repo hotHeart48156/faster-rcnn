@@ -35,7 +35,7 @@ namespace
 		std::string attribute(".jpg");
 		const auto num_sample = train ? KTrainSize : KTestSize;
 		const auto folder = train ? "/train" : "/test";
-		auto targets = torch::empty(num_sample, torch::kInt64);
+		auto targets = torch::empty(num_sample, torch::kFloat);
 		auto images = torch::empty({num_sample, 3, KRows, KCols}, torch::kFloat);
 		for (const auto &p : fs::directory_iterator(folder))
 		{
