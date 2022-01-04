@@ -5,14 +5,12 @@
 #include <rttr/registration>
 #include <vector>
 #include <rttr/type>
-// #include<rtt>
 struct BndBox
 {
     double xmax;
     double xmin;
     double ymax;
     double ymin;
-
     RTTR_ENABLE()
 };
 
