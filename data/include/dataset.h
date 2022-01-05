@@ -10,7 +10,8 @@ enum Mode
 };
 namespace
 {
-    struct CovDataset : torch::data::Dataset<CovDataset>
+    using Example=torch::data::Example<torch::Tensor,std::map<std::string,std::string>>;
+    struct CovDataset : torch::data::Dataset<CovDataset,torch::data::Example<torch::Tensor,std::map<std::string,std::string>>>
     {
     private:
         torch::Tensor images_;
@@ -23,7 +24,7 @@ namespace
 
     public:
         explicit CovDataset(const std::string data, const std::string file_splited_path, Mode mode = Mode::Train);
-        torch::data::Example<> get(size_t index) override;
+        Example get(size_t index) override;
         torch::optional<size_t> size() const override;
         std::pair<torch::Tensor, torch::Tensor> read_data(std::string data_xml_files, const std::string file_splited_path, size_t index);
         // return image and labels

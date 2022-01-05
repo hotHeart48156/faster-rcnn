@@ -101,11 +101,12 @@ namespace
 		CovDataset::xml_files_name = mode == Mode::Train ? txt_to_vec(file_splited_path + "train.txt") : txt_to_vec(file_splited_path + "test.txt");
 	}
 
-	torch::data::Example<> CovDataset::get(size_t index)
+	Example CovDataset::get(size_t index)
 	{
 		auto result = CovDataset::read_data("", "", index);
 		// return {result.first, result.second};
-		return{result.first,result.second};
+		// return{result.first,result.second};
+		std::map<std::string,std::string> cc;
+		return {torch::tensor(0),cc};
 	}
-
 }
