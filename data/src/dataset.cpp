@@ -44,56 +44,45 @@ namespace
 		}
 		return result;
 	}
-	std::pair<torch::Tensor, torch::Tensor> CovDataset::read_data(std::string data_xml_files, const std::string file_splited_path, size_t index)
+	Example CovDataset::read_data(std::string data_xml_files, const std::string file_splited_path, size_t index)
 	{
 		std::string attribute(".jpg");
 		const auto annotation = CovDataset::parse.parse(data_xml_files + CovDataset::xml_files_name.at(index));
 		auto image = CVtoTensor(cv::imread(annotation.filename));
-		const int size = annotation.objects.size();
-		double **boxes;
-		boxes = (double **)malloc(size * sizeof(double *));
-		char **labels;
-		labels = (char **)malloc(size * sizeof(char *));
-		int *iscrowd;
-		iscrowd = (int *)malloc(size * sizeof(int));
-		double *area;
-		area = (double *)malloc(size * sizeof(double));
-
-		int i = 0;
+		std::vector<std::vector<double>> boxes;
+		std::vector<std::vector<char *>> labels;
+		std::vector<int> iscrowd;
+		std::vector<double> areas;
 		for (auto object : annotation.objects)
 		{
-			double box[4] = {object.bndbox.xmax, object.bndbox.xmin, object.bndbox.ymax, object.bndbox.ymin};
-			boxes[i] = box;
-			labels[i] = const_cast<char *>(object.name.c_str());
-			iscrowd[i] = 0;
-			i++;
+			std::vector<double> box;
+			std::vector<char *> label;
+			box.push_back(object.bndbox.xmax);
+			box.push_back(object.bndbox.xmin);
+			box.push_back(object.bndbox.ymax);
+			box.push_back(object.bndbox.ymin);
+			label.push_back(const_cast<char *>(object.name.c_str()));
+			boxes.push_back(box);
+			labels.push_back(label);
+			iscrowd.push_back(0);
 		}
-
-		for (i = 0; i < size; i++)
+		for (auto box : boxes)
 		{
-			double box_area = (boxes[i][0] - boxes[i][1]) * (boxes[i][2] - boxes[i][3]);
-			area[i] = box_area;
+			double box_area = (box[0] - box[1]) * (box[2] - box[3]);
+			areas.push_back(box_area);
 		}
-		
-		
-		auto boxes_tensor = torch::tensor(boxes, torch::kFloat32);
-		auto labels_tensor = torch::tensor(labels, torch::kInt64);
-		auto iscrowd_tensor = torch::tensor(iscrowd, torch::kInt64);
-		auto area_tensor = torch::tensor(area, torch::kFloat32);
-		// std::map<std::string, torch::Tensor> target;
-		// auto target_it = target.begin();
-		// target.insert(target_it, std::pair<std::string, torch::Tensor>("boxes", boxes_tensor));
-		// target.insert(target_it, std::pair<std::string, torch::Tensor>("labels", labels_tensor));
-		// target.insert(target_it, std::pair<std::string, torch::Tensor>("iscrowd", iscrowd_tensor));
-		// target.insert(target_it, std::pair<std::string, torch::Tensor>("area", area_tensor));
-		torch::Tensor target[4];
-		// target=(torch::Tensor*)malloc(4*sizeof(boxes_tensor));
-		target[0]=boxes_tensor;
-		target[1]=labels_tensor;
-		target[2]=iscrowd_tensor;
-		target[3]=area_tensor;
 
-		return {image, boxes_tensor};
+		auto boxes_tensor = torch::from_blob(boxes.data(), {2}, torch::kFloat32);
+		auto labels_tensor = torch::from_blob(labels.data(), {1}, torch::kInt64);
+		auto iscrowd_tensor = torch::from_blob(iscrowd.data(), {1}, torch::kInt64);
+		auto area_tensor = torch::from_blob(areas.data(), {1}, torch::kFloat32);
+		std::map<std::string, torch::Tensor> target;
+		auto target_it = target.begin();
+		target.insert(target_it, std::pair<std::string, torch::Tensor>("boxes", boxes_tensor));
+		target.insert(target_it, std::pair<std::string, torch::Tensor>("labels", labels_tensor));
+		target.insert(target_it, std::pair<std::string, torch::Tensor>("iscrowd", iscrowd_tensor));
+		target.insert(target_it, std::pair<std::string, torch::Tensor>("area", area_tensor));
+		return {image, target};
 	}
 	CovDataset::CovDataset(const std::string data_xml_files, const std::string file_splited_path, Mode mode)
 		: mode_(mode)
@@ -104,9 +93,6 @@ namespace
 	Example CovDataset::get(size_t index)
 	{
 		auto result = CovDataset::read_data("", "", index);
-		// return {result.first, result.second};
-		// return{result.first,result.second};
-		std::map<std::string,std::string> cc;
-		return {torch::tensor(0),cc};
+		return result;
 	}
 }
