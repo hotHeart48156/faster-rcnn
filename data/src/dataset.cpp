@@ -71,7 +71,6 @@ namespace
 			double box_area = (box[0] - box[1]) * (box[2] - box[3]);
 			areas.push_back(box_area);
 		}
-
 		auto boxes_tensor = torch::from_blob(boxes.data(), {2}, torch::kFloat32);
 		auto labels_tensor = torch::from_blob(labels.data(), {1}, torch::kInt64);
 		auto iscrowd_tensor = torch::from_blob(iscrowd.data(), {1}, torch::kInt64);

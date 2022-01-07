@@ -14,8 +14,6 @@ namespace
     struct CovDataset : torch::data::Dataset<CovDataset,Example>
     {
     private:
-        torch::Tensor images_;
-        torch::Tensor targets_;
         Mode mode_;
         std::string data;
         std::string file_splited_path;
@@ -27,9 +25,6 @@ namespace
         Example get(size_t index) override;
         torch::optional<size_t> size() const override;
         Example read_data(std::string data_xml_files, const std::string file_splited_path, size_t index);
-        // return image and labels
-        const torch::Tensor &images() const;
-        const torch::Tensor $targets() const;
     };
 
 };
